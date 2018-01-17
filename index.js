@@ -8,8 +8,14 @@ app.get('/', (req, res) => {
 
 io.on('connection', (socket) => {
 	console.log('a user has connected')
+	io.emit('user message', 'user has connected!')
 	socket.on('disconnect', () => {
 		console.log('user disconnected')
+		io.emit('user message', 'user has disconnected')
+	})
+	socket.on('chat message', (msg) => {
+		console.log('message: ', msg)
+		io.emit('chat message', msg)
 	})
 })
 
